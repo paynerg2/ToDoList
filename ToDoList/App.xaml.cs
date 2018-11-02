@@ -1,6 +1,12 @@
-﻿using Prism.Unity;
+﻿using EditModule.Views;
+using DisplayModule.Views;
 using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Unity;
+using System.Data.Entity;
 using System.Windows;
+using ToDoList.Data;
+using ToDoList.Data.Services;
 using ToDoList.Views;
 
 namespace ToDoList
@@ -17,7 +23,14 @@ namespace ToDoList
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.RegisterSingleton<DbContext, EntryDbContext>();
+            containerRegistry.Register<IEntryRepository, EntryRepository>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<EditModule.EditModule>();
+            moduleCatalog.AddModule<DisplayModule.DisplayModule>();
         }
     }
 }

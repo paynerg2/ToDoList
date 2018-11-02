@@ -9,7 +9,12 @@ namespace ToDoList.Data.Services
 {
     public class EntryRepository : IEntryRepository
     {
-        EntryDbContext _context = new EntryDbContext();
+        EntryDbContext _context;
+
+        public EntryRepository(EntryDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task<Entry> AddEntryAsync(Entry entry)
         {

@@ -1,7 +1,11 @@
 ﻿using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
+using ToDoList.Infrastructure;
 using ToDoList.Views;
+using EditModule;
+using EditModule.Views;
+using DisplayModule.Views;
 
 namespace ToDoList.ViewModels
 {
@@ -21,8 +25,8 @@ namespace ToDoList.ViewModels
         private void Initialize()
         {
             _regionManager.RegisterViewWithRegion(RegionNames.EntryRegion, typeof(EntryView));
+            _regionManager.RegisterViewWithRegion(RegionNames.UserInteractionRegion, typeof(ToolbarView));
             _regionManager.RegisterViewWithRegion(RegionNames.UserInteractionRegion, typeof(EntryEditView));
-            _regionManager.RegisterViewWithRegion(RegionNames.ToolbarRegion, typeof(ToolbarView));
         }
     }
 }

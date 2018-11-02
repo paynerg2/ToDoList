@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
+        xmlns:inf="clr-namespace:ToDoList.Infrastructure;assembly=ToDoList.Infrastructure"
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
@@ -18,12 +19,11 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <ContentControl prism:RegionManager.RegionName="ToolbarRegion" HorizontalAlignment="Right" 
+        <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionNames.UserInteractionRegion}" 
                         Grid.Row="0"/>
-        <ItemsControl HorizontalContentAlignment="Left" prism:RegionManager.RegionName="EntryRegion" 
+        <ItemsControl HorizontalContentAlignment="Left" prism:RegionManager.RegionName="{x:Static inf:RegionNames.EntryRegion}" 
                         HorizontalAlignment="Stretch"
                         Grid.Row="1"/>
-        <ContentControl prism:RegionManager.RegionName="UserInteractionRegion" 
-                        Grid.Row="2"/>
+        
     </Grid>
 </Window>

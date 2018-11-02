@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToDoList.ViewModels
+namespace ToDoList.Infrastructure
 {
-    public class EntryEditViewModel
+    public class ModuleNames
     {
+        public const string EditModule = "EDIT_MODULE";
+
     }
 }

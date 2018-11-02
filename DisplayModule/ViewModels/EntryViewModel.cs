@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using ToDoList.Data.Models;
+using ToDoList.Data.Services;
 
-namespace ToDoList.ViewModels
+namespace DisplayModule.ViewModels
 {
     public class EntryViewModel : BindableBase
     {
@@ -62,5 +63,11 @@ namespace ToDoList.ViewModels
             set { SetProperty(ref _testList, value); }
         }
         #endregion
+
+        IEntryRepository _repository;
+        public EntryViewModel(IEntryRepository repository)
+        {
+            _repository = repository;
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace ToDoList.Data.Models
         public DateTime DateAdded { get; set; }
         public DateTime? DueDate { get; set; }
         public Guid Id { get; set; }
+        public string Category { get; set; }
 
         public ICollection<SubEntry> SubEntries { get; set; }
         
