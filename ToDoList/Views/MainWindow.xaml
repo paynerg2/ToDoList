@@ -7,8 +7,23 @@
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="To-Do List" Height="450" Width="800">
+        Title="To-Do List" Width="300">
+    
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <ContentControl prism:RegionManager.RegionName="ToolbarRegion" HorizontalAlignment="Right" 
+                        Grid.Row="0"/>
+        <ItemsControl HorizontalContentAlignment="Left" prism:RegionManager.RegionName="EntryRegion" 
+                        HorizontalAlignment="Stretch"
+                        Grid.Row="1"/>
+        <ContentControl prism:RegionManager.RegionName="UserInteractionRegion" 
+                        Grid.Row="2"/>
     </Grid>
 </Window>
