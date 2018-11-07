@@ -15,6 +15,7 @@
         
         <Button Content="Add New Entry" Grid.Column="1" 
                 Command="{Binding AddNewEntryCommand}"/>
-        <ComboBox Grid.Column="0" Width="200"/>
+        <ComboBox Grid.Column="0" Width="200"
+                  ItemsSource="{Binding Categories}"/>
     </Grid>
 </UserControl>

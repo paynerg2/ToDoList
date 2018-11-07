@@ -5,13 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DisplayModule.Views"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:converters="clr-namespace:DisplayModule.Converters"
              mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True"
              Width="285">
 
     <UserControl.Resources>
+        <converters:BoolToVisibililtyConverter x:Key="VisibilityConverter" />
+
         <DataTemplate x:Key="EntryTemplate">
-            <Grid>
+            <Grid x:Name="Entries">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
@@ -21,33 +24,41 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0"/>
                 <TextBlock Text="{Binding DateAdded}" TextAlignment="Right" Grid.Row="0" Grid.Column="2"/>
                 <TextBlock Text="{Binding Description}" DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
-                <ListView ItemsSource="{Binding SubEntries}"
-                          ItemTemplate="{DynamicResource EntryTemplate}" 
-                          HorizontalAlignment="Stretch"
-                          Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+                <ListView x:Name="Steps" ItemsSource="{Binding Steps}"
+                          Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                </ListView>
                 <TextBlock Text="{Binding DueDate}" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2"/>
+                
+                <!-- Edit/Delete/Completed controls. Attached to each ListViewItem -->
+                <Expander Header="Options" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Completed" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
+                            Mode=FindAncestor}, Path=DataContext.CompleteCommand}"/>
+                        <Button Content="Edit" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl,
+                            Mode=FindAncestor}, Path=DataContext.EditCommand}"/>
+                        <Button Content="Delete" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl,
+                            Mode=FindAncestor}, Path=DataContext.DeleteCommand}" />
+                    </StackPanel>
+                </Expander>
             </Grid>
+
         </DataTemplate>
 
-        <Style TargetType="ListViewItem">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                    <Setter Property="Background" Value="Green" />
-                    <Setter Property="Opacity" Value="0.4" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+
     </UserControl.Resources>
 
-    <ItemsControl>
-        <ListView ItemsSource="{Binding TestList}"
+    <ItemsControl x:Name="EntryItems">
+        <ListView ItemsSource="{Binding Entries}"
+                  SelectedItem="{Binding SelectedEntry}"
                   ItemTemplate="{StaticResource EntryTemplate}" 
-                  HorizontalContentAlignment="Stretch"/>
+                  HorizontalContentAlignment="Stretch">
+        </ListView>
     </ItemsControl>
 </UserControl>

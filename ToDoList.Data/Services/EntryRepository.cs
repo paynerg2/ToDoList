@@ -25,7 +25,9 @@ namespace ToDoList.Data.Services
         
         public async Task<List<Entry>> GetEntriesAsync()
         {
-            return await _context.Entries.ToListAsync<Entry>();
+            return await _context.Entries
+                                 .OrderBy(e => e.DateAdded)
+                                 .ToListAsync<Entry>();
         }
 
         public async Task<Entry> GetEntryAsync(Guid entryId)

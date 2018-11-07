@@ -13,7 +13,7 @@ namespace ToDoList.Data.Models
         public Guid Id { get; set; }
         public string Category { get; set; }
 
-        public ICollection<SubEntry> SubEntries { get; set; }
+        public ICollection<Step> Steps { get; set; }
         
     }
 }

@@ -1,5 +1,5 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using System.Collections.Generic;
 using ToDoList.Data.Models;
 using ToDoList.Data.Services;
@@ -8,66 +8,65 @@ namespace DisplayModule.ViewModels
 {
     public class EntryViewModel : BindableBase
     {
-        #region TestData
-        List<Entry> _testList = new List<Entry>()
+        private IEntryRepository _repository;
+        private Entry _selectedEntry;
+        private List<Entry> _entries;
+        private bool _editSectionIsVisible = false;
+
+        public DelegateCommand CompleteCommand { get; set; }
+        public DelegateCommand EditCommand { get; set; }
+        public DelegateCommand DeleteCommand { get; set; }
+
+        public Entry SelectedEntry
         {
-            new Entry
-            {
-                Name = "Finish app",
-                Description = "Complete the construction of this application.",
-                IsCompleted = false,
-                DateAdded = DateTime.Now,
-                DueDate = DateTime.Now.AddDays(5),
-                Id = Guid.NewGuid(),
-                SubEntries = new List<SubEntry>()
-                {
-                    new SubEntry
-                    {
-                        Name = "Make coffee",
-                        Description = "Fuel code via caffeine and stay up late as fuck",
-                        IsCompleted = false,
-                        DateAdded = DateTime.Now,
-                        DueDate = DateTime.Now.AddHours(5),
-                        Id = Guid.NewGuid(),
-                        SubEntries = null,
-                    },
-
-                    new SubEntry
-                    {
-                        Name = "Make coffee",
-                        Description = "Fuel code via caffeine late late late late late",
-                        IsCompleted = true,
-                        DateAdded = DateTime.Now,
-                        DueDate = DateTime.Now.AddHours(8),
-                        Id = Guid.NewGuid(),
-                        SubEntries = null
-                    }
-                }
-            },
-
-            new Entry
-            {
-                Name = "Make coffee",
-                Description = "Fuel code via caffeine",
-                IsCompleted = false,
-                DateAdded = DateTime.Now,
-                DueDate = DateTime.Now.AddHours(5),
-                Id = Guid.NewGuid(),
-                SubEntries = null
-            }
-        };
-
-        public List<Entry> TestList
-        {
-            get { return _testList; }
-            set { SetProperty(ref _testList, value); }
+            get { return _selectedEntry; }
+            set { SetProperty(ref _selectedEntry, value); }
         }
-        #endregion
 
-        IEntryRepository _repository;
+        public List<Entry> Entries
+        {
+            get { return _entries; }
+            set { SetProperty(ref _entries, value); }
+        }
+        
+        public bool EditSectionIsVisible
+        {
+            get { return _editSectionIsVisible; }
+            set { SetProperty(ref _editSectionIsVisible, value); }
+        }
+
+
         public EntryViewModel(IEntryRepository repository)
         {
             _repository = repository;
+
+            CompleteCommand = new DelegateCommand(Complete);
+            DeleteCommand = new DelegateCommand(Delete);
+            EditCommand = new DelegateCommand(Edit);
+
+            Initialize();
+        }
+
+        private async void Edit()
+        {
+            await _repository.UpdateEntryAsync(SelectedEntry);
+            Initialize();
+        }
+
+        private async void Delete()
+        {
+            await _repository.DeleteEntryAsync(SelectedEntry.Id);
+            Initialize();
+        }
+
+        private void Complete()
+         {
+            SelectedEntry.IsCompleted = !SelectedEntry.IsCompleted;
+        }
+
+        private async void Initialize()
+        {
+            Entries = await _repository.GetEntriesAsync();
         }
     }
 }

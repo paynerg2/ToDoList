@@ -1,11 +1,9 @@
-﻿using Prism.Ioc;
+﻿using DisplayModule.Views;
+using EditModule.Views;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using ToDoList.Infrastructure;
-using ToDoList.Views;
-using EditModule;
-using EditModule.Views;
-using DisplayModule.Views;
 
 namespace ToDoList.ViewModels
 {

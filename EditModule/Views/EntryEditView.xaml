@@ -4,10 +4,82 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EditModule.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:prism="http://prismlibrary.com/"
              mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="EditEntryTemplate">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Content="To-do:" Grid.Row="0" Grid.Column="0" />
+                <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
+
+                <Label Content="Due Date:" Grid.Row="1" Grid.Column="0" />
+                <DatePicker SelectedDateFormat="Short"
+                            DisplayDateStart="11/01/18" DisplayDateEnd="12/31/22"
+                            FirstDayOfWeek="Sunday" 
+                            SelectedDate="{Binding DueDate, Mode=OneWayToSource, FallbackValue={x:Static sys:DateTime.Now}}"
+                            Grid.Column="1" Grid.Row="1"/>
+
+                <Label Content="Description:" Grid.Row="2" Grid.Column="0" />
+                <TextBox Text="{Binding Description}" Grid.Row="2" Grid.Column="1"/>
+
+                <Label Content="Steps:" Grid.Row="3" Grid.Column="0" />
+                <Button Content="Add Step" Grid.Row="3" Grid.Column="1" />
+                <ListView ItemsSource="{Binding SubEntries}" 
+                          Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock Text="edit view" FontSize="38" />
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Content="To-do:" Grid.Row="0" Grid.Column="0" />
+        <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
+
+        <Label Content="Due Date:" Grid.Row="1" Grid.Column="0" />
+        <DatePicker SelectedDateFormat="Short"
+                            DisplayDateStart="11/01/18" DisplayDateEnd="12/31/22"
+                            FirstDayOfWeek="Sunday" 
+                            SelectedDate="{Binding DueDate}"
+                            Grid.Column="1" Grid.Row="1"/>
+
+        <Label Content="Description:" Grid.Row="2" Grid.Column="0" />
+        <TextBox Text="{Binding Description}" Grid.Row="2" Grid.Column="1" Width="185"/>
+
+        <Label Content="Steps:" Grid.Row="3" Grid.Column="0" />
+        <Button Content="Add Step" Grid.Row="3" Grid.Column="1" />
+        <ListView ItemsSource="{Binding SubEntries}" 
+                          Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <Button Content="Save" Command="{Binding SaveCommand, IsAsync=True}" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" />
     </Grid>
 </UserControl>

@@ -56,8 +56,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryDbContext.cs" />
+    <Compile Include="Migrations\201810081724277_InitialCreate.cs" />
+    <Compile Include="Migrations\201810081724277_InitialCreate.Designer.cs">
+      <DependentUpon>201810081724277_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811041846277_Name.cs" />
+    <Compile Include="Migrations\201811041846277_Name.Designer.cs">
+      <DependentUpon>201811041846277_Name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entry.cs" />
-    <Compile Include="Models\SubEntry.cs" />
+    <Compile Include="Models\Step.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -73,6 +82,12 @@
     </Compile>
     <Compile Include="Services\EntryRepository.cs" />
     <Compile Include="Services\IEntryRepository.cs" />
+    <EmbeddedResource Include="Migrations\201810081724277_InitialCreate.resx">
+      <DependentUpon>201810081724277_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811041846277_Name.resx">
+      <DependentUpon>201811041846277_Name.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
