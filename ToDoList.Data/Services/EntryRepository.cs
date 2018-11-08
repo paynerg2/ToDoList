@@ -16,7 +16,7 @@ namespace ToDoList.Data.Services
             _context = context;
         }
 
-        public async Task<Entry> AddEntryAsync(Entry entry)
+        public async Task<Entry> AddEntryAsync(Entry entry) 
         {
             _context.Entries.Add(entry);
             await _context.SaveChangesAsync();

@@ -103,6 +103,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DisplayModule\DisplayModule.csproj">
+      <Project>{b8016f28-664d-49b0-b499-b97866cd41d7}</Project>
+      <Name>DisplayModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToDoList.Data\ToDoList.Data.csproj">
       <Project>{db08c7a1-d405-486c-8ba9-af6044d1c50a}</Project>
       <Name>ToDoList.Data</Name>

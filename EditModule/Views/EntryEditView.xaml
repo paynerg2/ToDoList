@@ -80,6 +80,7 @@
         <ListView ItemsSource="{Binding SubEntries}" 
                           Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
 
-        <Button Content="Save" Command="{Binding SaveCommand, IsAsync=True}" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" />
+        <Button Content="Back" Command="{Binding NavigateBackCommand}" Grid.Row="5" Grid.Column="0" />
+        <Button Content="Save" Command="{Binding SaveCommand, IsAsync=True}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" />
     </Grid>
 </UserControl>

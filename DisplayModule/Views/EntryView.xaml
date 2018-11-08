@@ -28,16 +28,23 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0"/>
+                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="5" BorderBrush="LightGray"
+                        BorderThickness="2" />
+
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0"
+                           FontWeight="DemiBold"/>
                 <TextBlock Text="{Binding DateAdded}" TextAlignment="Right" Grid.Row="0" Grid.Column="2"/>
-                <TextBlock Text="{Binding Description}" DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
+                <TextBlock Text="{Binding Description}" DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                           TextWrapping="Wrap" Width="280"/>
                 <ListView x:Name="Steps" ItemsSource="{Binding Steps}"
                           Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
                 </ListView>
                 <TextBlock Text="{Binding DueDate}" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2"/>
                 
                 <!-- Edit/Delete/Completed controls. Attached to each ListViewItem -->
-                <Expander Header="Options" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                <Expander Header="Options" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                          IsExpanded="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor},
+                          Path=IsSelected}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Completed" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
                             Mode=FindAncestor}, Path=DataContext.CompleteCommand}"/>

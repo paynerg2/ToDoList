@@ -1,12 +1,13 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System.Collections.Generic;
 using ToDoList.Data.Models;
 using ToDoList.Data.Services;
 
 namespace DisplayModule.ViewModels
 {
-    public class EntryViewModel : BindableBase
+    public class EntryViewModel : BindableBase, INavigationAware
     {
         private IEntryRepository _repository;
         private Entry _selectedEntry;
@@ -68,5 +69,22 @@ namespace DisplayModule.ViewModels
         {
             Entries = await _repository.GetEntriesAsync();
         }
+
+        #region INavigationAware
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Initialize();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
+        }
+        #endregion
     }
 }
