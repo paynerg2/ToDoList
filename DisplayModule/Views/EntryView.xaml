@@ -47,11 +47,11 @@
                           Path=IsSelected}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Completed" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
-                            Mode=FindAncestor}, Path=DataContext.CompleteCommand}"/>
+                                Mode=FindAncestor}, Path=DataContext.CompleteCommand}"/>
                         <Button Content="Edit" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl,
-                            Mode=FindAncestor}, Path=DataContext.EditCommand}"/>
+                                Mode=FindAncestor}, Path=DataContext.EditCommand}"/>
                         <Button Content="Delete" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl,
-                            Mode=FindAncestor}, Path=DataContext.DeleteCommand}" />
+                                Mode=FindAncestor}, Path=DataContext.DeleteCommand}"  />
                     </StackPanel>
                 </Expander>
             </Grid>

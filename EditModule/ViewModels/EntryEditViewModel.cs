@@ -14,12 +14,14 @@ namespace EditModule.ViewModels
     public class EntryEditViewModel : BindableBase, INavigationAware
     {
         private string _name;
-        private DateTime _dueDate = DateTime.Now;
+        private DateTime? _dueDate = DateTime.Now;
         private string _description;
         private ICollection<Step> _subEntries;
         private IEntryRepository _repository;
         private IRegionManager _regionManager;
         private static Entry _selectedEntry;
+        private bool _isInEditMode = false;
+        private string _category;
 
 
         public string Name
@@ -33,7 +35,7 @@ namespace EditModule.ViewModels
             }
         }
 
-        public DateTime DueDate
+        public DateTime? DueDate
         {
             get { return _dueDate; }
             set
@@ -66,6 +68,16 @@ namespace EditModule.ViewModels
             }
         }
         
+        public string Category
+        {
+            get { return _category; }
+            set
+            {
+                SetProperty(ref _category, value);
+                if (_selectedEntry != null)
+                    _selectedEntry.Category = Category;
+            }
+        }
 
         public Entry SelectedEntry
         {
@@ -81,18 +93,22 @@ namespace EditModule.ViewModels
             _repository = repository;
             _regionManager = regionManager;
             
+            NavigateBackCommand = new DelegateCommand(NavigateToHome);
             SaveCommand = new DelegateCommand(Save);
-            NavigateBackCommand = new DelegateCommand(NavigateBack);
         }
 
-        private void NavigateBack()
+        private void Save()
         {
-            _regionManager.RequestNavigate(RegionNames.UserInteractionRegion, typeof(ToolbarView).FullName);
+            if(_isInEditMode)
+                _repository.UpdateEntryAsync(_selectedEntry);
+            else
+                _repository.AddEntryAsync(_selectedEntry);
+
+            NavigateToHome();
         }
 
-        private async void Save()
+        private void NavigateToHome()
         {
-            await _repository.AddEntryAsync(_selectedEntry);
             _regionManager.RequestNavigate(RegionNames.UserInteractionRegion, typeof(ToolbarView).FullName);
             _regionManager.RequestNavigate(RegionNames.EntryRegion, typeof(EntryView).FullName);
         }
@@ -100,9 +116,21 @@ namespace EditModule.ViewModels
         #region INavigationAware
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            _isInEditMode = false;
+
             if (navigationContext.Parameters["Entry"] is Entry entryToEdit)
+            {
                 SelectedEntry = entryToEdit;
 
+                // Update display fields
+                Name = SelectedEntry.Name;
+                Description = SelectedEntry.Description;
+                SubEntries = SelectedEntry.Steps;
+                DueDate = SelectedEntry.DueDate;
+
+                _isInEditMode = true;
+            }
+                
             if (SelectedEntry == null)
             {
                 SelectedEntry = new Entry()

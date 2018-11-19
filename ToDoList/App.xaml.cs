@@ -8,6 +8,8 @@ using System.Windows;
 using ToDoList.Data;
 using ToDoList.Data.Services;
 using ToDoList.Views;
+using Unity.Lifetime;
+using Unity;
 
 namespace ToDoList
 {
@@ -23,8 +25,8 @@ namespace ToDoList
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<DbContext, EntryDbContext>();
-            containerRegistry.Register<IEntryRepository, EntryRepository>();
+            containerRegistry.GetContainer().RegisterType<DbContext, EntryDbContext>(new PerResolveLifetimeManager());
+            containerRegistry.GetContainer().RegisterType<IEntryRepository, EntryRepository>(new PerResolveLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

@@ -1,6 +1,5 @@
 ﻿using DisplayModule.Views;
 using EditModule.Views;
-using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using ToDoList.Infrastructure;
@@ -10,12 +9,10 @@ namespace ToDoList.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         IRegionManager _regionManager;
-        IContainerExtension _container;
 
-        public MainWindowViewModel(IContainerExtension container, IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            _container = container;
 
             Initialize();
         }

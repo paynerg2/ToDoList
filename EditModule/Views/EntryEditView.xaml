@@ -59,6 +59,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -75,10 +76,13 @@
         <Label Content="Description:" Grid.Row="2" Grid.Column="0" />
         <TextBox Text="{Binding Description}" Grid.Row="2" Grid.Column="1" Width="185"/>
 
-        <Label Content="Steps:" Grid.Row="3" Grid.Column="0" />
-        <Button Content="Add Step" Grid.Row="3" Grid.Column="1" />
+        <Label Content="Category:" Grid.Row="3" Grid.Column="0" />
+        <TextBox Text="{Binding Category}" Grid.Row="3" Grid.Column="1" />
+
+        <Label Content="Steps:" Grid.Row="4" Grid.Column="0" />
+        <Button Content="Add Step" Grid.Row="4" Grid.Column="1" />
         <ListView ItemsSource="{Binding SubEntries}" 
-                          Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+                          Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" />
 
         <Button Content="Back" Command="{Binding NavigateBackCommand}" Grid.Row="5" Grid.Column="0" />
         <Button Content="Save" Command="{Binding SaveCommand, IsAsync=True}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" />

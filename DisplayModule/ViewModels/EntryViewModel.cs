@@ -1,15 +1,24 @@
 ﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using ToDoList.Data.Models;
 using ToDoList.Data.Services;
+using ToDoList.Infrastructure;
+using Unity;
+using System.Linq;
 
 namespace DisplayModule.ViewModels
 {
+    
     public class EntryViewModel : BindableBase, INavigationAware
     {
+        private IUnityContainer _container;
         private IEntryRepository _repository;
+        private IRegionManager _regionManager;
+        private IEventAggregator _eventAggregator;
         private Entry _selectedEntry;
         private List<Entry> _entries;
         private bool _editSectionIsVisible = false;
@@ -17,7 +26,7 @@ namespace DisplayModule.ViewModels
         public DelegateCommand CompleteCommand { get; set; }
         public DelegateCommand EditCommand { get; set; }
         public DelegateCommand DeleteCommand { get; set; }
-
+        
         public Entry SelectedEntry
         {
             get { return _selectedEntry; }
@@ -37,21 +46,37 @@ namespace DisplayModule.ViewModels
         }
 
 
-        public EntryViewModel(IEntryRepository repository)
+        public EntryViewModel(IUnityContainer container, IRegionManager regionManager,
+            IEventAggregator eventAggregator)
         {
-            _repository = repository;
+            _container = container;
+            _regionManager = regionManager;
+            _eventAggregator = eventAggregator;
 
             CompleteCommand = new DelegateCommand(Complete);
             DeleteCommand = new DelegateCommand(Delete);
             EditCommand = new DelegateCommand(Edit);
 
+            _eventAggregator.GetEvent<CategoryFilterEvent>().Subscribe(FilterByCategory);
+
             Initialize();
         }
 
-        private async void Edit()
+        private async void FilterByCategory(string category)
         {
-            await _repository.UpdateEntryAsync(SelectedEntry);
-            Initialize();
+            //_repository = _container.Resolve<IEntryRepository>();
+            var fullEntryList = await _repository.GetEntriesAsync();
+            Entries = category == string.Empty ? fullEntryList : 
+                fullEntryList.Where(e => e.Category == category).ToList();
+        }
+
+        private void Edit()
+        {
+            var param = new NavigationParameters
+            {
+                {"Entry", _selectedEntry }
+            };
+            _regionManager.RequestNavigate(RegionNames.UserInteractionRegion, "EntryEditView", param);
         }
 
         private async void Delete()
@@ -67,6 +92,7 @@ namespace DisplayModule.ViewModels
 
         private async void Initialize()
         {
+            _repository = _container.Resolve<IEntryRepository>();
             Entries = await _repository.GetEntriesAsync();
         }
 

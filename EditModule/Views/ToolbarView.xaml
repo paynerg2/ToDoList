@@ -16,6 +16,7 @@
         <Button Content="Add New Entry" Grid.Column="1" 
                 Command="{Binding AddNewEntryCommand}"/>
         <ComboBox Grid.Column="0" Width="200"
-                  ItemsSource="{Binding Categories}"/>
+                  ItemsSource="{Binding Categories}"
+                  SelectedItem="{Binding SelectedCategory}" />
     </Grid>
 </UserControl>

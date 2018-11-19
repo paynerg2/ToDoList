@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoList.Data.Models;
@@ -37,11 +38,22 @@ namespace ToDoList.Data.Services
 
         public async Task<Entry> UpdateEntryAsync(Entry entry)
         {
-            if(!_context.Entries.Local.Any(e => e.Id == entry.Id))
+            // TODO: Understand EF6 more fully, and probably refactor this method entirely.
+
+            if (!_context.Entries.Local.Any(e => e.Id == entry.Id))
             {
                 _context.Entries.Attach(entry);
             }
+
+            // Avoid the case where we attempt to modify an entity already in the context
+            // by setting the state to detached before modifying if it exists in the context.
+            var local = _context.Set<Entry>()
+                                .Local
+                                .FirstOrDefault(e => e.Id == entry.Id);
+            if (local != null)
+                _context.Entry(local).State = EntityState.Detached;
             _context.Entry(entry).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
             return entry;
         }
