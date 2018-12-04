@@ -87,6 +87,7 @@ namespace EditModule.ViewModels
         
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand NavigateBackCommand { get; set; }
+        public DelegateCommand AddStepCommand { get; set; }
 
         public EntryEditViewModel(IEntryRepository repository, IRegionManager regionManager)
         {
@@ -95,6 +96,14 @@ namespace EditModule.ViewModels
             
             NavigateBackCommand = new DelegateCommand(NavigateToHome);
             SaveCommand = new DelegateCommand(Save);
+            AddStepCommand = new DelegateCommand(AddStep);
+        }
+
+        private void AddStep()
+        {
+            if (SubEntries == null)
+                SubEntries = new List<Step>();
+            SubEntries.Add(new Step() { Data = "new step" });
         }
 
         private void Save()

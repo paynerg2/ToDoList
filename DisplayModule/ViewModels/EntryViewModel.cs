@@ -2,17 +2,16 @@
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using ToDoList.Data.Models;
 using ToDoList.Data.Services;
 using ToDoList.Infrastructure;
 using Unity;
-using System.Linq;
 
 namespace DisplayModule.ViewModels
 {
-    
+
     public class EntryViewModel : BindableBase, INavigationAware
     {
         private IUnityContainer _container;

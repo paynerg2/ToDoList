@@ -79,12 +79,13 @@
         <Label Content="Category:" Grid.Row="3" Grid.Column="0" />
         <TextBox Text="{Binding Category}" Grid.Row="3" Grid.Column="1" />
 
-        <Label Content="Steps:" Grid.Row="4" Grid.Column="0" />
-        <Button Content="Add Step" Grid.Row="4" Grid.Column="1" />
-        <ListView ItemsSource="{Binding SubEntries}" 
-                          Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" />
+        <!--<Label Content="Steps:" Grid.Row="4" Grid.Column="0" />
+        <Button Content="Add Step" Grid.Row="4" Grid.Column="1" 
+                Command="{Binding AddStepCommand}"/>
+        <ListView ItemsSource="{Binding Source=SubEntries, Path=Data}" 
+                          Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" />-->
 
-        <Button Content="Back" Command="{Binding NavigateBackCommand}" Grid.Row="5" Grid.Column="0" />
-        <Button Content="Save" Command="{Binding SaveCommand, IsAsync=True}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" />
+        <Button Content="Back" Command="{Binding NavigateBackCommand}" Grid.Row="6" Grid.Column="0" />
+        <Button Content="Save" Command="{Binding SaveCommand, IsAsync=True}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" />
     </Grid>
 </UserControl>

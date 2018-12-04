@@ -36,13 +36,14 @@
                 <TextBlock Text="{Binding DateAdded}" TextAlignment="Right" Grid.Row="0" Grid.Column="2"/>
                 <TextBlock Text="{Binding Description}" DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                            TextWrapping="Wrap" Width="280"/>
-                <ListView x:Name="Steps" ItemsSource="{Binding Steps}"
+                <!--<ListView x:Name="Steps" ItemsSource="{Binding Steps}"
                           Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
-                </ListView>
-                <TextBlock Text="{Binding DueDate}" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2"/>
+                </ListView>-->
+                <TextBlock Text="{Binding DueDate}" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="2"/>
                 
                 <!-- Edit/Delete/Completed controls. Attached to each ListViewItem -->
-                <Expander Header="Options" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                <Expander Header="Options" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                          IsHitTestVisible="False"
                           IsExpanded="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor},
                           Path=IsSelected}">
                     <StackPanel Orientation="Horizontal">
